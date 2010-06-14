@@ -1,0 +1,69 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>Joint Jukebox</title>
+		<link rel="stylesheet" type="text/css" href="jukebox.css">
+	</head>
+	<body>
+		<div id="jukebox">
+			<h1 id="title">Joint Jukebox</h1>
+			<div id="player">
+				<div id="status">
+					Now playing:
+					<strong id="current-track-title"> </strong>
+				</div>
+				<div id="ytplayer-container"></div>
+				<button id="video-hide" title="Hide the video player.">Hide</button>
+				<button id="volume" title="Adjust volume">Vol</button>
+				<button id="upvote" title="Vote this track up. (you want to hear it more often)">++</button>
+				<button id="downvote" title="Vote this track down. (you don't want to hear it.">--</button>
+			</div>
+			<div id="tabs">
+				<a href="" id="nextup" class="active">Next Up</a>
+				<a href="" id="justadded">Just Added</a>
+				<a href="" id="popular">Popular</a>
+				<a href="" id="all">All</a>
+			</div>
+			<ol id="tracks"><!--
+				<li id="track">Title</li>
+			--></ol>
+			<div id="no-tracks-message">
+				&darr;  Add some tracks!  &darr;
+			</div>
+			<input id="suggest-track" value="Suggest new track" class="default-text">
+			<div id="search-results-container">
+				<button id="search-results-close" title="Close the search results">X</button>
+				<div id="search-results-list">
+					<!--<div class="search-result">
+						<img src="src">Title
+						<button>+</button>
+					</div>-->
+				</div>
+			</div>
+		</div>
+		<p><a href="http://googlewavedev.blogspot.com/2010/01/my-extension-wish-joint-jukebox.html">Joint Jukebox inspiration on Google Wave Dev Blog</a></p>
+		<script src="/wave/sharedobject/sharedobject.js"></script>
+		<script src="/wave/sharedobject/doublesharedobject.js"></script>
+		<script src="jukebox.js"></script>
+		<script src="jukebox-view.js"></script>
+		<script src="jukebox-state.js"></script>
+		<script>
+			var jukebox = new Jukebox();
+			var state = new DoubleSharedObject(new SharedStorage(sessionStorage));
+			//new WavyDoubleSharedObject(state);
+			new JukeboxView(jukebox);
+			new JukeboxState(jukebox, state);
+			
+			var track = new Track();
+			track.set({
+				"type": Track.YOUTUBE,
+				"srcId": "mHXBL6bzAR4",
+				"title": "An Engineer's Guide to Cats",
+				"thumbnail": "http://i.ytimg.com/vi/mHXBL6bzAR4/default.jpg"
+			});
+			//jukebox.addTrack(track);
+		</script>
+		<button onclick="jukebox.advanceTrack()">next</button>
+	</body>
+</html>
